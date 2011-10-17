@@ -1,14 +1,14 @@
-# this is a template file for use as base to create PnL udev-rules
+# this is a template file for use as base to create PDAL udev-rules
 
-ENV{PNL_TAG}=="1", GOTO="pnl_end"
+ENV{PDAL_TAG}=="1", GOTO="pdal_end"
 
 ACTION=="add", SUBSYSTEM=="usb", \
 	ATTRS{bDeviceClass}=="ff", \
 	ATTRS{bDeviceSubClass}=="00", \
 	ATTRS{bDeviceProtocol}=="00", \
 	ENV{MIMETYPE}="x-device/vendor-specific", \
-	ENV{PNL_TAG}!="1",  \
-        ENV{PNL_TAG}="1", \
-	RUN+="/usr/bin/pnl -p /sys/$devpath -mode on"
+	ENV{PDAL_TAG}!="1",  \
+        ENV{PDAL_TAG}="1", \
+	RUN+="/usr/bin/pdal -p /sys/$devpath -mode on"
 
-LABEL="pnl_end"
+LABEL="pdal_end"

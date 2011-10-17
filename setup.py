@@ -25,12 +25,12 @@ for arg in sys.argv:
 
 def update_data_path(prefix, oldvalue=None):
     try:
-        fin = file('pnl/pnlconfig.py', 'r')
+        fin = file('pdal/pdalconfig.py', 'r')
         fout = file(fin.name + '.new', 'w')
 
         for line in fin:
             fields = line.split(' = ') # Separate variable from value
-            if fields[0] == '__pnl_data_directory__':
+            if fields[0] == '__pdal_data_directory__':
                 # update to prefix, store oldvalue
                 if not oldvalue:
                     oldvalue = fields[1]
@@ -44,11 +44,11 @@ def update_data_path(prefix, oldvalue=None):
         fin.close()
         os.rename(fout.name, fin.name)
     except (OSError, IOError), e:
-        print ("ERROR: Can't find pnl/palconfig.py")
+        print ("ERROR: Can't find pdal/pdalconfig.py")
         sys.exit(1)
     return oldvalue
 
-oldvalue=update_data_path(prefix + '/share/pnl/')
+oldvalue=update_data_path(prefix + '/share/pdal/')
 
 
 #class Clean(Command):
@@ -76,12 +76,12 @@ oldvalue=update_data_path(prefix + '/share/pnl/')
 #    outfile.close()
 
 setup(
-        name='pnl',
+        name='pdal',
         version='0.1',
-        description='PnL (Plug and Launch).',
+        description='PDAL (Pluggable Device Action Launcher).',
         author='David Amian Valle',
         author_email='damian@emergya.com',
-        url='https://launchpad.net/pnl',
+        url='https://launchpad.net/pdal',
 
         classifiers=[
             'Development Status :: 0.1 - Alpha',
@@ -94,13 +94,13 @@ setup(
         
         keywords = ['python', 'udev', 'gnome'],
 
-        packages = ['pnl'], 
-        package_dir =  {'pnl': 'pnl'},
+        packages = ['pdal'], 
+        package_dir =  {'pdal': 'pdal'},
 
-        scripts = ['bin/pnl'],
+        scripts = ['bin/pdal'],
         
         data_files = [
-            ('/etc/udev/rules.d', ['udev-rules/99-pnl.rules']),
+            ('/etc/udev/rules.d', ['udev-rules/99-pdal.rules']),
         ],
         cmdclass = { 
                  

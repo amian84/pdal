@@ -33,14 +33,14 @@ __all__ = [
 
 # Where your project will look for your data (for instance, images and ui
 # files). By default, this is ../data, relative your trunk layout
-__pnl_data_directory__ = '/usr/local/share/pnl/'
+__pdal_data_directory__ = '/usr/local/share/pdal/'
 __license__ = ''
 
 import os
 
 import gettext
 from gettext import gettext as _
-gettext.textdomain('pnl')
+gettext.textdomain('pdal')
 
 class project_path_not_found(Exception):
     """Raised when we can't find the project directory."""
@@ -59,14 +59,14 @@ def get_data_file(*path_segments):
 def get_data_path():
     """Retrieve hans data path
 
-    This path is by default <pnl_lib_path>/../data/ in trunk
-    and /usr/share/pnl in an installed version but this path
+    This path is by default <pdal_lib_path>/../data/ in trunk
+    and /usr/share/pdal in an installed version but this path
     is specified at installation time.
     """
 
     # Get pathname absolute or relative.
     path = os.path.join(
-        os.path.dirname(__file__), __pnl_data_directory__)
+        os.path.dirname(__file__), __pdal_data_directory__)
 
     abs_data_path = os.path.abspath(path)
     if not os.path.exists(abs_data_path):

@@ -1,4 +1,4 @@
-# Icon Assignment PnL udev-rules file
+# Icon Assignment PDAL udev-rules file
 #
 # This rules define defaults icons for devices
 # This rules are based on udev-notiy https://code.launchpad.net/~skss/udev-notify/udev-notify
@@ -58,14 +58,14 @@ LABEL="icon_assignment"
 
 
 ACTION=="add", SUBSYSTEMS=="usb", ENV{DEVTYPE}=="usb_device", \
-    ENV{PNL_TAG}!="1", \
-    ENV{PNL_TAG}="1", \
-	RUN+="/usr/bin/pnl -p /sys$devpath -m on"
+    ENV{PDAL_TAG}!="1", \
+    ENV{PDAL_TAG}="1", \
+	RUN+="/usr/bin/pdal -p /sys$devpath -m on"
 
 
 ACTION=="remove", SUBSYSTEMS=="usb", ENV{DEVTYPE}=="usb_device", \
-    ENV{PNL_TAG}!="1", \
-    ENV{PNL_TAG}="1", \
-	RUN+="/usr/bin/pnl -p /sys$devpath -m off"
+    ENV{PDAL_TAG}!="1", \
+    ENV{PDAL_TAG}="1", \
+	RUN+="/usr/bin/pdal -p /sys$devpath -m off"
 
 

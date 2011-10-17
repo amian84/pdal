@@ -25,14 +25,14 @@ import pynotify
 import os
 import gtk
 import sys
-from pnl import _
-from pnl.pnlconfig import get_data_path
+from pdal import _
+from pdal.pdalconfig import get_data_path
 
 def notify(title, message, icon, timeout=pynotify.EXPIRES_DEFAULT, transient=True):
 
     # Desktop Notifications Specification: http://www.galago-project.org/specs/notification/0.9/index.html
 
-    if not pynotify.init("PnL " + _("Notifications")):
+    if not pynotify.init("Pdal " + _("Notifications")):
         return
 
     notify = pynotify.Notification(title, message)
@@ -46,7 +46,7 @@ def notify(title, message, icon, timeout=pynotify.EXPIRES_DEFAULT, transient=Tru
         print _("Failed to send notification")
 
 def get_script_user_path():
-    return os.path.join(os.path.expanduser('~'), ".pnl/scripts/")
+    return os.path.join(os.path.expanduser('~'), ".pdal/scripts/")
 
 def get_system_user_path():
     return os.path.join(get_data_path(), "scripts")

@@ -22,10 +22,10 @@
 
 import gettext
 
-gettext.textdomain('pnl')
+gettext.textdomain('pdal')
 
 try:
-    lang = gettext.translation('pnl')
+    lang = gettext.translation('pdal')
     _ = lang.gettext
 
 except:
