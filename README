@@ -1,2 +1,2 @@
-PAL (Plug and Launch)
-PAL is a application for launch shell script when the user connect any USB device. A udev rule will be in charge of launching a shell script which filename based on product_id and vendor_id
+PnL (Plug and Launch)
+PnL is a application for launch shell script when the user connect any USB device. A udev rule will be in charge of launching a shell script which filename based on product_id and vendor_id
