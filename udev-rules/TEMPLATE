@@ -1,14 +1,14 @@
-# this is a template file for use as base to create HANS udev-rules
+# this is a template file for use as base to create PnL udev-rules
 
-ENV{HANS_TAG}=="1", GOTO="hans_end"
+ENV{PNL_TAG}=="1", GOTO="pnl_end"
 
 ACTION=="add", SUBSYSTEM=="usb", \
 	ATTRS{bDeviceClass}=="ff", \
 	ATTRS{bDeviceSubClass}=="00", \
 	ATTRS{bDeviceProtocol}=="00", \
 	ENV{MIMETYPE}="x-device/vendor-specific", \
-	ENV{HANS_TAG}!="1",  \
-        ENV{HANS_TAG}="1", \
-	RUN+="/usr/bin/hans $env{MIMETYPE} $devpath"
+	ENV{PNL_TAG}!="1",  \
+        ENV{PNL_TAG}="1", \
+	RUN+="/usr/bin/pnl -p /sys/$devpath -mode on"
 
-LABEL="hans_end"
+LABEL="pnl_end"
