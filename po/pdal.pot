@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-10-18 14:26+0200\n"
+"POT-Creation-Date: 2011-10-18 18:58+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,83 +17,30 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: bin/pdal:43 bin/pdal:44
-#, python-format
-msgid "Reading device %s"
-msgstr ""
-
-#: bin/pdal:47
-msgid "Notification with new device"
-msgstr ""
-
-#: bin/pdal:48
+#: .././bin/pdal:88
 msgid "New device connected"
 msgstr ""
 
-#: bin/pdal:49
-msgid "Looking for user actions"
-msgstr ""
-
-#: bin/pdal:50
-msgid "Connecting to Dbus for search a current user"
-msgstr ""
-
-#: bin/pdal:68
-#, python-format
-msgid "The user in the session '%s' haven't a X11 Display"
-msgstr ""
-
-#: bin/pdal:72
-#, python-format
-msgid "Get user with display %s"
-msgstr ""
-
-#: bin/pdal:84
-msgid "The user %(username) have not a script %(filename)"
-msgstr ""
-
-#: bin/pdal:90
-msgid "Looking for root actions"
-msgstr ""
-
-#: bin/pdal:94
-#, python-format
-msgid "Does't exist %s script in the pdal system path"
-msgstr ""
-
-#: bin/pdal:105
-#, python-format
-msgid "Executing script %s"
-msgstr ""
-
-#: bin/pdal:119
+#: .././bin/pdal:139
 msgid "Usage: pdal [-p|--path] [-m|--mode]"
 msgstr ""
 
-#: bin/pdal:155
+#: .././bin/pdal:175
 msgid "[-p|--path] option is required"
 msgstr ""
 
-#: bin/pdal:160
+#: .././bin/pdal:180
 msgid "[-m|--mode] option is required"
 msgstr ""
 
-#: pdal/DeviceClass.py:127
+#: .././pdal/DeviceClass.py:127
 msgid "camera photo"
 msgstr ""
 
-#: pdal/DeviceClass.py:129
+#: .././pdal/DeviceClass.py:129
 msgid "multimedia player"
 msgstr ""
 
-#: pdal/DeviceClass.py:136
+#: .././pdal/DeviceClass.py:136
 msgid "device"
-msgstr ""
-
-#: pdal/utils.py:47
-msgid "Notifications"
-msgstr ""
-
-#: pdal/utils.py:58
-msgid "Failed to send notification"
 msgstr ""
