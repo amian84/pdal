@@ -21,7 +21,7 @@
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301
 # USA
 
-import pynotify
+from gi.repository import Notify
 import os
 import gtk
 import sys
@@ -40,18 +40,17 @@ def get_default_icon_device():
     return os.path.join(get_data_path(), DEFAULT_ICON_DEVICE)
 
 
-def notify(title, message, icon, timeout=pynotify.EXPIRES_DEFAULT, transient=True):
+def notify(title, message, icon, timeout=Notify.EXPIRES_DEFAULT, transient=True):
 
     # Desktop Notifications Specification: http://www.galago-project.org/specs/notification/0.9/index.html
 
-    if not pynotify.init("Pdal " + _("Notifications")):
+    if not Notify.init("Pdal " + _("Notifications")):
         return
 
-    notify = pynotify.Notification(title, message)
-    notify.set_icon_from_pixbuf(icon)
+    notify_daemon = Notify.Notification()
+    notify = notify_daemon.new(title, '\n'+message, icon)
     notify.set_category('device.added')
-    notify.set_urgency(pynotify.URGENCY_LOW)
-    notify.set_hint('transient', transient)
+#    notify.set_hint('transient', transient)
     notify.set_timeout(timeout)
 
     if not notify.show():
