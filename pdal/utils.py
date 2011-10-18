@@ -57,8 +57,8 @@ def notify(title, message, icon, timeout=pynotify.EXPIRES_DEFAULT, transient=Tru
     if not notify.show():
         print _("Failed to send notification")
 
-def get_script_user_path():
-    return os.path.join(os.path.expanduser('~'), ".pdal/scripts/")
+def get_script_user_path(home_path):
+    return os.path.join(home_path, ".pdal/scripts/")
 
 def get_system_user_path():
     return os.path.join(get_data_path(), "scripts")
