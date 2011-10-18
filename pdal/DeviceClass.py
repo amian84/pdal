@@ -72,8 +72,8 @@ class DeviceClass():
         return model_id
 
     def get_vendor_id(self):
-        vendor_id = self.dev_udev.get_property('ID_MODEL_ID')
-        return vendor
+        vendor_id = self.dev_udev.get_property('ID_VENDOR_ID')
+        return vendor_id
 
     def get_devname(self):
         devname = self.dev_udev.get_property('DEVNAME')
@@ -102,11 +102,11 @@ class DeviceClass():
         num_interfaces = self.get_number_interfaces()
         for i in range(num_interfaces):
             iclass = self.get_interfaces()[i]
-            filename = iclass.get_icon(icon_size, flags)
+            filename = iclass.get_icon(icon_size, flag)
             if type(filename) == str and not os.path.exists(filename):
-                filename = utils.get_theme_icon_path(filename, icon_size, flags)
+                filename = utils.get_theme_icon_path(filename, icon_size, flag)
 
-            if filename not None:
+            if filename != None:
                 return filename
         else:
             return utils.get_default_icon_device()
