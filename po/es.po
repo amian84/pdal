@@ -1,0 +1,98 @@
+# PDAL (Pluggable Device Action Launcher).
+# Copyright (C) 2011
+# This file is distributed under the same license as the pdal package.
+# David Amian Valle <damian@emergya.com>, 2011
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: 0.1\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2011-10-18 14:26+0200\n"
+"PO-Revision-Date: 2011-10-18 14:27+0200\n"
+"Last-Translator: David Amian <damian@emergya.com>\n"
+"Language: es\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: bin/pdal:43 bin/pdal:44
+#, python-format
+msgid "Reading device %s"
+msgstr "Leyendo dispositivo %s"
+
+#: bin/pdal:47
+msgid "Notification with new device"
+msgstr "Notificacion del nuevo dispositivo"
+
+#: bin/pdal:48
+msgid "New device connected"
+msgstr "Nuevo dispositivo conectado"
+
+#: bin/pdal:49
+msgid "Looking for user actions"
+msgstr "Buscando acciones de usuario"
+
+#: bin/pdal:50
+msgid "Connecting to Dbus for search a current user"
+msgstr "Recogiendo el usuario activo desde D-bus"
+
+#: bin/pdal:68
+#, python-format
+msgid "The user in the session '%s' haven't a X11 Display"
+msgstr "La sesion de usuario '%s' no contiene un display X11"
+
+#: bin/pdal:72
+#, python-format
+msgid "Get user with display %s"
+msgstr "Recogiendo usuario con display %s"
+
+#: bin/pdal:84
+msgid "The user %(username) have not a script %(filename)"
+msgstr "El usuario %(username) no tiene la accion %(filename)"
+
+#: bin/pdal:90
+msgid "Looking for root actions"
+msgstr "Buscando acciones del sistema"
+
+#: bin/pdal:94
+#, python-format
+msgid "Does't exist %s script in the pdal system path"
+msgstr "No existe la %s accion en la ruta del sistema de PDAL"
+
+#: bin/pdal:105
+#, python-format
+msgid "Executing script %s"
+msgstr "Ejecutando accion %s"
+
+#: bin/pdal:119
+msgid "Usage: pdal [-p|--path] [-m|--mode]"
+msgstr "Uso: pdal [-p|--path] [-m|--mode]"
+
+#: bin/pdal:155
+msgid "[-p|--path] option is required"
+msgstr "[-p|--path] es una opcion requerida"
+
+#: bin/pdal:160
+msgid "[-m|--mode] option is required"
+msgstr "[-m|--mode] es una opcion requerida"
+
+#: pdal/DeviceClass.py:127
+msgid "camera photo"
+msgstr "camara de fotos"
+
+#: pdal/DeviceClass.py:129
+msgid "multimedia player"
+msgstr "reproductor multimedia"
+
+#: pdal/DeviceClass.py:136
+msgid "device"
+msgstr "dispositivo"
+
+#: pdal/utils.py:47
+msgid "Notifications"
+msgstr "Notificaciones"
+
+#: pdal/utils.py:58
+msgid "Failed to send notification"
+msgstr "Fallo al enviar la notificacion"

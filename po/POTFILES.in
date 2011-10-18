@@ -1,0 +1,3 @@
+./bin/pdal
+./pdal/DeviceClass.py
+./pdal/InterfaceClass.py
