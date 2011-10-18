@@ -32,6 +32,18 @@ import time
 from pdal import (_, utils,DeviceClass)
 from pdal.utils import notify
 
+# Add project root directory (enable symlink, and trunk execution).
+#PROJECT_ROOT_DIRECTORY = os.path.abspath(
+#    os.path.dirname(os.path.dirname(os.path.realpath(sys.argv[0]))))
+#
+#if (os.path.exists(os.path.join(PROJECT_ROOT_DIRECTORY, 'pdal'))
+#    and PROJECT_ROOT_DIRECTORY not in sys.path):
+#    sys.path.insert(0, PROJECT_ROOT_DIRECTORY)
+#    os.putenv('PYTHONPATH', PROJECT_ROOT_DIRECTORY) # for subprocesses
+#
+
+
+
 class PdalCore():
 
     def __init__(self, device_path, device_mode):
@@ -41,11 +53,9 @@ class PdalCore():
     def main(self):
 
         logging.info(_('Reading device %s') % self.device_path)
-        print _('Reading device %s') % self.device_path
+        self.override_user = False
         self.device = DeviceClass.DeviceClass(self.device_path)
-        self.filename_script = self.device.get_vendor_id()+':'+self.device.get_model_id()+'-'+self.device_mode+'.sh'
-        logging.info(_('Notification with new device'))
-        notify("PDAL - %s" % (_("New device connected",)), self.device.get_formated_name(), self.device.get_pixbuf())
+        self.filename_script = self.device.get_vendor_id()+':'+self.device.get_model_id()+'-'+self.device_mode
         logging.info(_('Looking for user actions'))
         logging.info(_('Connecting to Dbus for search a current user'))
         self.users = '('
@@ -54,7 +64,7 @@ class PdalCore():
         self.obj_manager = self.system_dbus.get_object('org.freedesktop.ConsoleKit','/org/freedesktop/ConsoleKit/Manager')
         self.session = self.obj_manager.get_dbus_method('GetSeats', dbus_interface='org.freedesktop.ConsoleKit.Manager')()
         self.seats = self.obj_manager.get_dbus_method('GetSeats', dbus_interface='org.freedesktop.ConsoleKit.Manager')()
-
+    
         for seat in self.seats:
 
             self.obj_seat = self.system_dbus.get_object('org.freedesktop.ConsoleKit',seat)
@@ -68,40 +78,50 @@ class PdalCore():
                     logging.info(_('The user in the session \'%s\' haven\'t a X11 Display') % session)
                     continue
                 else:
-
+                    self.user_uid = self.obj_session.get_dbus_method('GetUnixUser',dbus_interface='org.freedesktop.ConsoleKit.Session')()
+                    
+                    pid=os.fork()
+                    if pid==0:
+                        os.setuid(self.user_uid)
+                        os.putenv('DISPLAY',self.display)
+                        logging.info(_('Notification with new device'))
+                        notify("PDAL - %s" % (_("New device connected",)), self.device.get_formated_name(), self.device.get_icon())
+                        sys.exit()
+                    
+                    
                     logging.info(_('Get user with display %s') % self.display)
-                    self.user_uid = self.obj_session.get_dbus_method('GetX11Display',dbus_interface='org.freedesktop.ConsoleKit.Session')()
                     self.username = pwd.getpwuid(self.user_uid).pw_name
                     self.home_user = pwd.getpwuid(self.user_uid).pw_dir
-                    self.path_user_scripts = utils.get_script_user_path(self.home_user)
+                    self.path_user_script = utils.get_script_user_path(self.home_user)
                     self.displays = self.displays+self.display
                     self.users = self.users+self.username
 
                     if os.path.exists(os.path.join(self.path_user_script,self.filename_script)):
-                        execute_script(self.username,os.path.join(self.path_user_script,self.filename_script))
+                        self.override_user = True
+                        self.execute_script(self.username,os.path.join(self.path_user_script,self.filename_script))
                         
                     else:
-                        logging.info(_('The user %(username) have not a script %(filename)') % {'username':self.username, 'filename':self.filename_script})
+                        logging.info(_('The user '+self.username+' have not a script '+ self.filename_script))
                         continue
 
         self.displays = self.displays + ')'
         self.users = self.users + ')'
-                    
-        logging.info(_('Looking for root actions'))
-        if os.path.exists(os.path.join(utils.get_system_user_path(), self.filename_script)):
-            execute_script('root',os.path.join(utils.get_system_user_path(), self.filename_script))
-        else:
-            logging.info(_('Does\'t exist %s script in the pdal system path') % self.filename_script)
+        if not self.override_user:
+            logging.info(_('Looking for root actions'))
+            if os.path.exists(os.path.join(utils.get_system_user_path(), self.filename_script)):
+                self.execute_script('root',os.path.join(utils.get_system_user_path(), self.filename_script))
+            else:
+                logging.info(_('Does\'t exist %s script in the pdal system path') % self.filename_script)
         
         
 
     def execute_script(self, username, filename):
-        os.putenv('PDAL_MODEL_ID',utils.get_model_id())
-        os.putenv('PDAL_VENDOR_ID',utils.get_vendor_id())
-        os.putenv('PDAL_MODEL',utils.get_model())
-        os.putenv('PDAL_VENDOR',utils.get_vendor())
-        os.putenv('PDAL_SYSFSPATH',utils.get_sysfs_path())
-        os.putenv('PDAL_DEVNAME',utils.get_devname())
+        os.putenv('PDAL_MODEL_ID',self.device.get_model_id())
+        os.putenv('PDAL_VENDOR_ID',self.device.get_vendor_id())
+        os.putenv('PDAL_MODEL',self.device.get_model())
+        os.putenv('PDAL_VENDOR',self.device.get_vendor())
+        os.putenv('PDAL_SYSFSPATH',self.device.get_sysfs_path())
+        os.putenv('PDAL_DEVNAME',self.device.get_devname())
         logging.info(_('Executing script %s') % filename) 
         if username == 'root':
             os.putenv('PDAL_DISPLAYS', self.displays)
@@ -116,7 +136,7 @@ class PdalCore():
             
 
 def usage():
-    logging.info _("Usage: pdal [-p|--path] [-m|--mode]")
+    logging.info(_("Usage: pdal [-p|--path] [-m|--mode]"))
 
 
 if __name__ == '__main__':
@@ -152,12 +172,12 @@ if __name__ == '__main__':
 
 
     if not optpath :
-        logging.info _("[-p|--path] option is required")
+        logging.info(_("[-p|--path] option is required"))
         usage()
         sys.exit(2)
 
     if not optmode :
-        logging.info _("[-m|--mode] option is required")
+        logging.info(_("[-m|--mode] option is required"))
         usage()
         sys.exit(2)
     logging.basicConfig(filename='/var/log/pdal.log', filemode='a', level=logging.INFO)
