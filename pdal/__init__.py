@@ -21,11 +21,22 @@
 # USA
 
 import gettext
+import os
 
+language='en'
+f = open('/etc/default/locale','r')
+for line in f:
+    default_locale=line.split('=')
+    if default_locale[0] == 'LANG':
+        value = default_locale[1].replace('"','')
+        languages = value.split('_')
+        language = languages[0]
+
+print language
 gettext.textdomain('pdal')
 
 try:
-    lang = gettext.translation('pdal')
+    lang = gettext.translation('pdal',languages=[language])
     _ = lang.gettext
 
 except:
