@@ -143,6 +143,7 @@ if __name__ == '__main__':
 
     argvs = sys.argv[1:]
 
+    logging.basicConfig(filename='/var/log/pdal.log', filemode='a', level=logging.INFO)
     try:
         options, remainder = getopt.gnu_getopt(argvs, 'p:m:', ['path=', 'mode='])
 
@@ -180,7 +181,6 @@ if __name__ == '__main__':
         logging.info(_("[-m|--mode] option is required"))
         usage()
         sys.exit(2)
-    logging.basicConfig(filename='/var/log/pdal.log', filemode='a', level=logging.INFO)
     logging.info('Started - '+ time.ctime())
     pdal = PdalCore(device_path, device_mode)
     pdal.main()
