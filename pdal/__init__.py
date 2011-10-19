@@ -22,6 +22,8 @@
 
 import gettext
 import os
+from pdal import pdalconfig
+
 
 language='en'
 f = open('/etc/default/locale','r')
@@ -33,7 +35,12 @@ for line in f:
         language = languages[0]
 
 print language
-gettext.textdomain('pdal')
+if pdalconfig.get_prefix() == '/usr/local':
+    gettext.bindtextdomain('pdal', '/usr/local/share/locale')
+else:
+    gettext.textdomain('pdal')
+
+    
 
 try:
     lang = gettext.translation('pdal',languages=[language])

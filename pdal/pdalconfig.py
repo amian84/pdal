@@ -29,11 +29,13 @@ __all__ = [
     'project_path_not_found',
     'get_data_file',
     'get_data_path',
+    'get_prefix',
     ]
-
+import sys
 # Where your project will look for your data (for instance, images and ui
 # files). By default, this is ../data, relative your trunk layout
 __pdal_data_directory__ = '/usr/local/share/pdal/'
+__pdal_prefix__ = sys.prefix
 __license__ = ''
 
 import os
@@ -55,6 +57,8 @@ def get_data_file(*path_segments):
     """
     return os.path.join(get_data_path(), *path_segments)
 
+def get_prefix():
+    return __pdal_prefix__
 
 def get_data_path():
     """Retrieve hans data path

@@ -23,6 +23,15 @@ for arg in sys.argv:
         prefix = arg[9:]
         prefix = os.path.expandvars(prefix)
 
+for filename in ['udev-rules/99-pdal.rules']:
+    infile = open(filename + '.in', 'r')
+    data = infile.read().replace('@PREFIX@', prefix)
+    infile.close()
+
+    outfile = open(filename, 'w')
+    outfile.write(data)
+    outfile.close()
+
 def update_data_path(prefix, oldvalue=None):
     try:
         fin = file('pdal/pdalconfig.py', 'r')
