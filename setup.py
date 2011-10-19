@@ -102,6 +102,8 @@ setup(
         data_files = [
             ('/etc/udev/rules.d', ['udev-rules/99-pdal.rules']),
             ('share/pdal/scripts/', glob.glob('data/scripts/README')),
+            ('share/pdal/scripts/', glob.glob('data/scripts/README')),
+            ('share/pdal/media', glob.glob('data/media/*')),
         ],
         cmdclass = { 
                  
