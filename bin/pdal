@@ -51,7 +51,7 @@ class PdalCore():
         self.device_mode = device_mode
 
     def main(self):
-        if self.device_mode='on':
+        if self.device_mode == 'on':
             self.plugg_on()
         else:
             self.plugg_off()
