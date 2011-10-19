@@ -51,7 +51,12 @@ class PdalCore():
         self.device_mode = device_mode
 
     def main(self):
+        if self.device_mode='on':
+            self.plugg_on()
+        else:
+            self.plugg_off()
 
+    def plugg_on(self):
         logging.info(_('Reading device %s') % self.device_path)
         self.override_user = False
         self.device = DeviceClass.DeviceClass(self.device_path)
