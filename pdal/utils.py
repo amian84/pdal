@@ -50,7 +50,7 @@ def notify(title, message, icon, timeout=Notify.EXPIRES_DEFAULT, transient=True)
     notify_daemon = Notify.Notification()
     notify = notify_daemon.new(title, '\n'+message, icon)
     notify.set_category('device.added')
-#    notify.set_hint('transient', transient)
+    notify.set_hint('transient', None)
     notify.set_timeout(timeout)
 
     if not notify.show():
