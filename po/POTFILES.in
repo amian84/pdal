@@ -1,3 +1,4 @@
-./bin/pdal
-./pdal/DeviceClass.py
-./pdal/InterfaceClass.py
+../bin/pdal
+../pdal/DeviceClass.py
+../pdal/InterfaceClass.py
+../pdal/utils.py

@@ -14,7 +14,7 @@ pofile="${podir}/${lang}.po"
 pofilemerged="${podir}/${lang}.merged.po"
 mofile="${podir}/${appname}.mo"
 
-find .. -type f -name "*.py" > $potfilesin
+#find .. -type f -name "*.py" > $potfilesin
 
 xgettext --language=Python --keyword=_ --output=$potfile -f $potfilesin
 

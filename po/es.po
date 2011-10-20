@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-10-19 13:52+0200\n"
+"POT-Creation-Date: 2011-10-20 15:17+0200\n"
 "PO-Revision-Date: 2011-10-19 13:56+0200\n"
 "Last-Translator: David Amian <damian@emergya.com>\n"
 "Language-Team: pdal-translator <pdal-translator@null.com>\n"
@@ -17,83 +17,93 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: bin/pdal:55
+#: ../bin/pdal:66
+msgid "Cleaning temp file with properties"
+msgstr "Limpiando fichero temporal con propiedades de Udev"
+
+#: ../bin/pdal:70
+msgid "Creating temp file with properties"
+msgstr "Creando fichero temporal con propiedades de Udev"
+
+#: ../bin/pdal:81
+msgid "Saving temp file with properties"
+msgstr "Guardando fichero temporal con propiedades de Udev"
+
+#: ../bin/pdal:87
+msgid "New device connected"
+msgstr "Nuevo dispositivo conectado"
+
+#: ../bin/pdal:118
 #, python-format
 msgid "Reading device %s"
 msgstr "Leyendo dispositivo %s"
 
-#: bin/pdal:59
+#: ../bin/pdal:122
 msgid "Looking for user actions"
 msgstr "Buscando acciones de usuario"
 
-#: bin/pdal:60
+#: ../bin/pdal:123
 msgid "Connecting to Dbus for search a current user"
 msgstr "Conectando a D-Bus para obtener el usuario actual"
 
-#: bin/pdal:78
-#, python-format
-msgid "The user in the session '%s' haven't a X11 Display"
+#: ../bin/pdal:129
+#, fuzzy, python-format
+msgid "The user '%s' haven't a X11 Display"
 msgstr "El usuario en la session '%s' no tiene X11 Display"
 
-#: bin/pdal:87
+#: ../bin/pdal:139
 msgid "Notification with new device"
 msgstr "Notificacion con el nuevo dispositivo"
 
-#: bin/pdal:88
-msgid "New device connected"
-msgstr "Nuevo dispositivo conectado"
-
-#: bin/pdal:92
-#, python-format
-msgid "Get user with display %s"
-msgstr "Recogiendo usuario con display %s"
-
-#: bin/pdal:104
+#: ../bin/pdal:149
 msgid "The user "
 msgstr "El usuario "
 
-#: bin/pdal:110
+#: ../bin/pdal:199
 msgid "Looking for root actions"
 msgstr "Buscando acciones de sistema"
 
-#: bin/pdal:114
+#: ../bin/pdal:203
 #, python-format
 msgid "Does't exist %s script in the pdal system path"
 msgstr "No existe el script %s en la ruta del sistema"
 
-#: bin/pdal:125
+#: ../bin/pdal:214
 #, python-format
 msgid "Executing script %s"
 msgstr "Ejecutando script %s"
 
-#: bin/pdal:139
+#: ../bin/pdal:228
 msgid "Usage: pdal [-p|--path] [-m|--mode]"
 msgstr "Uso: pdal [-p|--path] [-m|--mode]"
 
-#: bin/pdal:176
+#: ../bin/pdal:265
 msgid "[-p|--path] option is required"
 msgstr "[-p|--path] argumento obligatorio"
 
-#: bin/pdal:181
+#: ../bin/pdal:270
 msgid "[-m|--mode] option is required"
 msgstr "[-m|--mode] argumento obligatorio"
 
-#: pdal/DeviceClass.py:127
+#: ../pdal/DeviceClass.py:127
 msgid "camera photo"
 msgstr "camara de fotos"
 
-#: pdal/DeviceClass.py:129
+#: ../pdal/DeviceClass.py:129
 msgid "multimedia player"
 msgstr "reproductor multimedia"
 
-#: pdal/DeviceClass.py:136
+#: ../pdal/DeviceClass.py:136
 msgid "device"
 msgstr "dispositivo"
 
-#: pdal/utils.py:47
+#: ../pdal/utils.py:47
 msgid "Notifications"
 msgstr "Notificaciones"
 
-#: pdal/utils.py:57
+#: ../pdal/utils.py:57
 msgid "Failed to send notification"
 msgstr "Fallo al enviar la notificacion"
+
+#~ msgid "Get user with display %s"
+#~ msgstr "Recogiendo usuario con display %s"
