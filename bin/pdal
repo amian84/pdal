@@ -52,11 +52,19 @@ class PdalCore():
         self.device_mode = device_mode
 
     def main(self):
+        self.plug()
         if self.device_mode == 'on':
-            self.plugg_on()
             self.save_properties()
-        else:
-            self.plugg_off()
+        else: 
+            self.remove_tmpfile()
+
+    def remove_tmpfile(self):
+        tmp_path = os.path.join('/tmp/.pdal',self.device_path[1:len(self.device_path)])
+        if os.path.exists(tmp_path):
+            logging.info(_('Cleaning temp file with properties'))
+            os.remove(os.path.join(tmp_path,'properties.cfg'))
+            os.removedirs(tmp_path)    
+
     
     def save_properties(self):
         if not os.path.exists('/tmp/.pdal'):
@@ -70,25 +78,28 @@ class PdalCore():
         logging.info(_('Creating temp file with properties'))
         properties = ConfigParser.ConfigParser()
         properties.add_section('UdevProp')
-        properties.set('UdevProp','model',self.device.get_model())    
-        properties.set('UdevProp','vendor',self.device.get_vendor())    
-        properties.set('UdevProp','model_id',self.device.get_model_id())    
-        properties.set('UdevProp','vendor_id',self.device.get_vendor_id())    
-        properties.set('UdevProp','devname',self.device.get_devname())    
-        properties.set('UdevProp','sysfspath',self.device.get_sysfs_path())    
-        properties.set('UdevProp','icon',self.device.get_icon())    
-        properties.set('UdevProp','formated_name',self.device.get_formated_name())    
+        properties.set('UdevProp','model',self.dev_model)    
+        properties.set('UdevProp','vendor',self.dev_vendor)    
+        properties.set('UdevProp','model_id',self.dev_model_id)    
+        properties.set('UdevProp','vendor_id',self.dev_vendor_id)    
+        properties.set('UdevProp','devname',self.dev_devname)    
+        properties.set('UdevProp','sysfspath',self.dev_sysfs_path)    
+        properties.set('UdevProp','icon',self.dev_icon)    
+        properties.set('UdevProp','formated_name',self.dev_formated_name)    
+        properties.set('UdevProp','devices_fs',self.dev_devices_fs)    
         logging.info(_('Saving temp file with properties'))
         with open(os.path.join(tmp_path,'properties.cfg'),'wb') as propertiesfile:
             properties.write(propertiesfile)
         
 
     def send_notify(self, body, icon):
-        notify("PDAL - %s" % (_("New device connected",)), body, icon)
-        
-    def plugg_off(self):
-        pass
+        if self.device_mode == 'on':
+            title = _("New device connected")
+        else:
+            title = _("Device disconnected")
     
+        notify(("PDAL - %s" % title), body, icon)
+        
 
     def get_users_system(self):
 
@@ -114,18 +125,55 @@ class PdalCore():
 
         return list_users            
 
+    def get_conf_from_udev(self):
+        logging.info(_('Reading device %s from udev') % self.device_path)
+        device = DeviceClass.DeviceClass(self.device_path)
+        self.dev_formated_name = device.get_formated_name()
+        self.dev_icon = device.get_icon()
+        self.dev_model_id = device.get_model_id()
+        self.dev_vendor_id = device.get_vendor_id()
+        self.dev_model = device.get_model()
+        self.dev_vendor = device.get_vendor()
+        self.dev_sysfs_path = device.get_sysfs_path()
+        self.dev_devname = device.get_devname()
+        self.dev_devices_fs = device.get_devices_fs()
+    
+    def get_conf_from_tmpfile(self):
+        logging.info(_('Reading device %s from tmp file') % self.device_path)
+        config = ConfigParser.ConfigParser()
+        tmp_path = os.path.join('/tmp/.pdal',self.device_path[1:len(self.device_path)])
+        if os.path.exists(os.path.join(tmp_path,'properties.cfg')):
+            tmp_file = os.path.join(tmp_path,'properties.cfg')
+            config.read(tmp_file)
+            self.dev_formated_name = config.get('UdevProp','formated_name')
+            self.dev_icon = config.get('UdevProp','icon')
+            self.dev_model_id = config.get('UdevProp','model_id')
+            self.dev_vendor_id = config.get('UdevProp','vendor_id')
+            self.dev_model = config.get('UdevProp','model')
+            self.dev_vendor = config.get('UdevProp','vendor')
+            self.dev_sysfs_path = config.get('UdevProp','sysfspath')
+            self.dev_devname = config.get('UdevProp','devname')
+            self.dev_devices_fs = config.get('UdevProp','devices_fs')
+        else:
+            logging.info(_('The file properites \'%s\' doesn\'t exists') % os.path.join(tmp_path,'properties.cfg'))
+            sys.exit()
 
-    def plugg_on(self):
+    def plug(self):
+        if self.device_mode == 'off':
+            self.get_conf_from_tmpfile()
+        else:
+            self.get_conf_from_udev()
+            
+
         logging.info(_('Reading device %s') % self.device_path)
         self.override_user = False
-        self.device = DeviceClass.DeviceClass(self.device_path)
-        self.filename_script = self.device.get_vendor_id()+':'+self.device.get_model_id()+'-'+self.device_mode
+        self.filename_script = self.dev_vendor_id+':'+self.dev_model_id+'-'+self.device_mode
         logging.info(_('Looking for user actions'))
         logging.info(_('Connecting to Dbus for search a current user'))
         self.users = '('
         self.displays = '('
-        users_sys = self.get_users_system()
-        for user in users_sys:
+        self.users_sys = self.get_users_system()
+        for user in self. users_sys:
             if not user.have_display():
                 logging.info(_('The user \'%s\' haven\'t a X11 Display') % user.get_username())
                 continue
@@ -137,8 +185,8 @@ class PdalCore():
                 if pid == 0:
                     os.setuid(user.get_uid())
                     os.putenv('DISPLAY', user.get_display())
-                    logging.info(_('Notification with new device'))
-                    self.send_notify(self.device.get_formated_name(), self.device.get_icon())
+                    logging.info(_('Notification of device'))
+                    self.send_notify(self.dev_formated_name, self.dev_icon)
                     sys.exit ()
 
                 self.path_user_script = utils.get_script_user_path(user.home)
@@ -162,13 +210,17 @@ class PdalCore():
         
 
     def execute_script(self, username, filename, user=None):
-        os.putenv('PDAL_MODEL_ID',self.device.get_model_id())
-        os.putenv('PDAL_VENDOR_ID',self.device.get_vendor_id())
-        os.putenv('PDAL_MODEL',self.device.get_model())
-        os.putenv('PDAL_VENDOR',self.device.get_vendor())
-        os.putenv('PDAL_SYSFSPATH',self.device.get_sysfs_path())
-        os.putenv('PDAL_DEVNAME',self.device.get_devname())
-        os.putenv('PDAL_DEVICES_FS' self.device.get_devices_fs())
+        os.putenv('PDAL_MODEL_ID',self.dev_model_id)
+        os.putenv('PDAL_VENDOR_ID',self.dev_vendor_id)
+        os.putenv('PDAL_MODEL',self.dev_model)
+        os.putenv('PDAL_VENDOR',self.dev_vendor)
+        os.putenv('PDAL_SYSFSPATH',self.dev_sysfs_path)
+        os.putenv('PDAL_DEVNAME',self.dev_devname)
+        devicesfs= '('
+        for devfs in self.dev_devices_fs:
+            devicesfs = devicesfs + devfs
+        devicesfs= ')'
+        os.putenv('PDAL_DEVICES_FS', devicesfs)
         logging.info(_('Executing script %s') % filename) 
         if username == 'root':
             os.putenv('PDAL_DISPLAYS', self.displays)
