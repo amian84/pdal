@@ -86,14 +86,14 @@ oldvalue=update_data_path(prefix + '/share/pdal/')
 
 setup(
         name='pdal',
-        version='0.1',
+        version='0.2',
         description='PDAL (Pluggable Device Action Launcher).',
         author='David Amian Valle',
         author_email='damian@emergya.com',
         url='https://launchpad.net/pdal',
 
         classifiers=[
-            'Development Status :: 0.1 - Alpha',
+            'Development Status :: 0.2 - Alpha',
             'Environment :: Desktop Environment',
             'License :: OSI Approved :: GNU General Public License (GPL)',
             'Operating System :: POSIX',
