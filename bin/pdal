@@ -87,7 +87,8 @@ class PdalCore():
         notify("PDAL - %s" % (_("New device connected",)), body, icon)
         
     def plugg_off(self):
-        pass        
+        pass
+    
 
     def get_users_system(self):
 
@@ -149,50 +150,6 @@ class PdalCore():
                     logging.info(_('The user '+user.get_username()+' have not a script '+ self.filename_script))
                     continue
 
-#        self.system_dbus = dbus.SystemBus()
-#        self.obj_manager = self.system_dbus.get_object('org.freedesktop.ConsoleKit','/org/freedesktop/ConsoleKit/Manager')
-#        self.session = self.obj_manager.get_dbus_method('GetSeats', dbus_interface='org.freedesktop.ConsoleKit.Manager')()
-#        self.seats = self.obj_manager.get_dbus_method('GetSeats', dbus_interface='org.freedesktop.ConsoleKit.Manager')()
-#    
-#        for seat in self.seats:
-#
-#            self.obj_seat = self.system_dbus.get_object('org.freedesktop.ConsoleKit',seat)
-#            self.sessions = self.obj_seat.get_dbus_method('GetSessions', dbus_interface='org.freedesktop.ConsoleKit.Seat')()
-#            for session in self.sessions:
-#
-#                self.obj_session = self.system_dbus.get_object('org.freedesktop.ConsoleKit',session)
-#                self.display = self.obj_session.get_dbus_method('GetX11Display',dbus_interface='org.freedesktop.ConsoleKit.Session')()
-#                if self.display == '':
-#
-#                    logging.info(_('The user in the session \'%s\' haven\'t a X11 Display') % session)
-#                    continue
-#                else:
-#                    self.user_uid = self.obj_session.get_dbus_method('GetUnixUser',dbus_interface='org.freedesktop.ConsoleKit.Session')()
-#                    
-#                    pid=os.fork()
-#                    if pid==0:
-#                        os.setuid(self.user_uid)
-#                        os.putenv('DISPLAY',self.display)
-#                        logging.info(_('Notification with new device'))
-#                        self.send_notify(self.device.get_formated_name(), self.device.get_icon())
-#                        sys.exit()
-#                    
-#                    
-#                    logging.info(_('Getting user with display %s') % self.display)
-#                    self.username = pwd.getpwuid(self.user_uid).pw_name
-#                    self.home_user = pwd.getpwuid(self.user_uid).pw_dir
-#                    self.path_user_script = utils.get_script_user_path(self.home_user)
-#                    self.displays = self.displays+self.display
-#                    self.users = self.users+self.username
-#
-#                    if os.path.exists(os.path.join(self.path_user_script,self.filename_script)):
-#                        self.override_user = True
-#                        self.execute_script(self.username,os.path.join(self.path_user_script,self.filename_script))
-#                        
-#                    else:
-#                        logging.info(_('The user '+self.username+' have not a script '+ self.filename_script))
-#                        continue
-
         self.displays = self.displays + ')'
         self.users = self.users + ')'
         if not self.override_user:
@@ -211,6 +168,7 @@ class PdalCore():
         os.putenv('PDAL_VENDOR',self.device.get_vendor())
         os.putenv('PDAL_SYSFSPATH',self.device.get_sysfs_path())
         os.putenv('PDAL_DEVNAME',self.device.get_devname())
+        os.putenv('PDAL_DEVICES_FS' self.device.get_devices_fs())
         logging.info(_('Executing script %s') % filename) 
         if username == 'root':
             os.putenv('PDAL_DISPLAYS', self.displays)
