@@ -41,6 +41,15 @@ class InterfaceClass():
     def get_udev_object(self):
         return self.int_udev
 
+    def get_devices_fs(self):
+        devices_fs = []
+        l_udev = self.client.query_by_subsystem('*')
+        for udev_object in l_udev:
+            if self.sysfspath + '/' in udev_object.get_sysfs_path():
+                if udev_object.get_property('DEVTYPE')=='disk':
+                    devices_fs.append(udev_object.get_property('DEVNAME'))
+        return devices_fs
+    
     def get_icon(self, icon_size=utils.DEFAULT_ICON_SIZE, flags=0):
         filename = None
         l_udev = self.client.query_by_subsystem('*')

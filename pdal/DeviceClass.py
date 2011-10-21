@@ -42,7 +42,7 @@ class DeviceClass():
         self.list_interfaces = None
 
     def __str__(self):
-        return self.getFormatedName()
+        return self.get_formated_name()
 
     def get_sysfs_path(self):
         return self.sysfspath
@@ -78,6 +78,16 @@ class DeviceClass():
     def get_devname(self):
         devname = self.dev_udev.get_property('DEVNAME')
         return devname
+
+    def get_devices_fs(self):
+        devices_fs = []
+        num_interfaces = self.get_number_interfaces()
+        for i in range(num_interfaces):
+            iclass = self.get_interfaces()[i]
+            devices_fs = devices_fs + iclass.get_devices_fs()
+
+        return devices_fs                
+
 
     def get_interfaces(self):
         if self.list_interfaces == None:
