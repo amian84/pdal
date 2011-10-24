@@ -40,7 +40,7 @@ def get_default_icon_device():
     return os.path.join(get_data_path(), DEFAULT_ICON_DEVICE)
 
 
-def notify(title, message, icon, timeout=Notify.EXPIRES_DEFAULT, transient=True):
+def notify(title, message, icon, timeout=pynotify.EXPIRES_DEFAULT, transient=True):
 
     # Desktop Notifications Specification: http://www.galago-project.org/specs/notification/0.9/index.html
 
@@ -49,7 +49,7 @@ def notify(title, message, icon, timeout=Notify.EXPIRES_DEFAULT, transient=True)
 
     notify = pynotify.Notification(title, '\n'+message, icon)
     notify.set_category('device.added')
-    notify.set_hint('transient', None)
+    notify.set_hint('transient', transient)
     notify.set_timeout(timeout)
 
     if not notify.show():
