@@ -21,7 +21,7 @@
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301
 # USA
 
-from gi.repository import Notify
+import pynotify
 import os
 import gtk
 import sys
@@ -44,11 +44,10 @@ def notify(title, message, icon, timeout=Notify.EXPIRES_DEFAULT, transient=True)
 
     # Desktop Notifications Specification: http://www.galago-project.org/specs/notification/0.9/index.html
 
-    if not Notify.init("Pdal " + _("Notifications")):
+    if not pynotify.init("Pdal " + _("Notifications")):
         return
 
-    notify_daemon = Notify.Notification()
-    notify = notify_daemon.new(title, '\n'+message, icon)
+    notify = pynotify.Notification(title, '\n'+message, icon)
     notify.set_category('device.added')
     notify.set_hint('transient', None)
     notify.set_timeout(timeout)
