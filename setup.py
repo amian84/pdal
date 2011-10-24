@@ -85,7 +85,7 @@ oldvalue=update_data_path(prefix + '/share/pdal/')
 #    outfile.close()
 
 setup(
-        name='pdal',
+        name='pdal2',
         version='0.2',
         description='PDAL (Pluggable Device Action Launcher).',
         author='David Amian Valle',
