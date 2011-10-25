@@ -34,9 +34,9 @@ for line in f:
         languages = value.split('_')
         language = languages[0]
 
-if pdalconfig.get_prefix() == '/usr/local':
+if pdalconfig.get_prefix() == '/usr/local/share/pdal/':
     gettext.bindtextdomain('pdal', '/usr/local/share/locale')
-else:
+elif pdalconfig.get_prefix() == '/usr/share/pdal/':
     gettext.textdomain('pdal')
 
     
