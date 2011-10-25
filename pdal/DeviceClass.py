@@ -22,7 +22,9 @@
 # USA
 
 import os.path
-import gudev
+from gi.repository import GUdev
+#import gudev
+import sys
 import gettext
 from pdal import utils, InterfaceClass
 from pdal.pdalconfig import get_data_path
@@ -34,8 +36,10 @@ class DeviceClass():
 
     def __init__(self, sysfspath):
         self.sysfspath = sysfspath
-        self.client = gudev.Client('usb')
+        self.client = GUdev.Client.new('usb')
+        #self.client = gudev.Client('usb')
         self.dev_udev = self.client.query_by_sysfs_path(sysfspath)
+        
         if self.dev_udev == None:
             raise Exception('Device not found: ' + sysfspath)
         self.de = None

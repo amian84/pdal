@@ -24,7 +24,8 @@
 import sys
 import os.path
 from pdal import utils
-import gudev
+#import gudev
+from gi.repository import GUdev
 import re
 import sys
 
@@ -32,7 +33,7 @@ class InterfaceClass():
 
     def __init__(self, sysfspath):
         self.sysfspath = sysfspath
-        self.client = gudev.Client('usb')
+        self.client = GUdev.Client.new('usb')
         self.int_udev = self.client.query_by_sysfs_path(sysfspath)
 
     def __str__(self):
