@@ -96,7 +96,7 @@ update_data_path(prefix + '/share/pdal/')
 
 setup(
         name='pdal2',
-        version='0.3',
+        version='0.3.1',
         description='PDAL (Pluggable Device Action Launcher).',
         author='David Amian Valle',
         author_email='damian@emergya.com',
