@@ -103,23 +103,23 @@ class DeviceClass():
             return self.list_interfaces
 
     def get_icon(self, icon_size=utils.DEFAULT_ICON_SIZE, flag=0):
-        if self.dev_udev.get_property('ICON'):
-            filename = self.dev_udev.get_property('ICON')
-            if not os.path.exists(filename):
-                filename = utils.get_theme_icon_path(filename, icon_size, flag)
-                return filename
-            return filename
-        num_interfaces = self.get_number_interfaces()
-        for i in range(num_interfaces):
-            iclass = self.get_interfaces()[i]
-            filename = iclass.get_icon(icon_size, flag)
-            if type(filename) == str and not os.path.exists(filename):
-                filename = utils.get_theme_icon_path(filename, icon_size, flag)
+        #if self.dev_udev.get_property('ICON'):
+        #    filename = self.dev_udev.get_property('ICON')
+        #    if not os.path.exists(filename):
+        #        filename = utils.get_theme_icon_path(filename, icon_size, flag)
+        #        return filename
+        #    return filename
+        #num_interfaces = self.get_number_interfaces()
+        #for i in range(num_interfaces):
+        #    iclass = self.get_interfaces()[i]
+        #    filename = iclass.get_icon(icon_size, flag)
+        #    if type(filename) == str and not os.path.exists(filename):
+        #        filename = utils.get_theme_icon_path(filename, icon_size, flag)
 
-            if filename != None:
-                return filename
-        else:
-            return utils.get_default_icon_device()
+        #    if filename != None:
+        #        return filename
+        #else:
+        return utils.get_default_icon_device()
 
     def get_pixbuf(self, icon_size=utils.DEFAULT_ICON_SIZE, flag=0):
         return utils.get_pixbuf_from_file(self.get_icon(), icon_size, flag)
