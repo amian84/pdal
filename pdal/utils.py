@@ -21,9 +21,8 @@
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301
 # USA
 
-from gi.repository import Notify
+from gi.repository import Notify, Gtk, GdkPixbuf
 import os
-import gtk
 import sys
 from pdal import _
 from pdal.pdalconfig import get_data_path
@@ -63,20 +62,20 @@ def get_system_user_path():
     return os.path.join(get_data_path(), "scripts")
 
 
-def get_pixbuf_from_file(file_name, icon_size=DEFAULT_ICON_SIZE, flags=gtk.gdk.INTERP_BILINEAR):
+def get_pixbuf_from_file(file_name, icon_size=DEFAULT_ICON_SIZE, flags=GdkPixbuf.InterpType.BILINEAR):
     if not os.path.exists(file_name):
         return None
-    image = gtk.Image()
+    image = Gtk.Image()
     image.set_from_file(file_name)
     pixbuf = image.get_pixbuf()
     pixbuf = pixbuf.scale_simple(icon_size, icon_size, flags)
     return pixbuf
 
-def get_theme_icon_path(icon_name, icon_size=DEFAULT_ICON_SIZE, flags=0):
-    icon_theme = gtk.icon_theme_get_default()
-    icons = icon_theme.list_icons()
-    if not icon_name in icons:
-        return None
-    file_name = icon_theme.lookup_icon(icon_name, icon_size, flags).get_filename()
-    return file_name
-
+#def get_theme_icon_path(icon_name, icon_size=DEFAULT_ICON_SIZE, flags=0):
+#    icon_theme = gtk.icon_theme_get_default()
+#    icons = icon_theme.list_icons()
+#    if not icon_name in icons:
+#        return None
+#    return file_name
+#
+#    file_name = icon_theme.lookup_icon(icon_name, icon_size, flags).get_filename()
