@@ -32,7 +32,7 @@ for filename in ['udev-rules/99-pdal.rules']:
     outfile.write(data)
     outfile.close()
 
-def update_data_path(prefix, oldvalue=None):
+def update_data_path(prefix, oldvalue_data=None, oldvalue_prefix=None):
     try:
         fin = file('pdal/pdalconfig.py', 'r')
         fout = file(fin.name + '.new', 'w')
@@ -41,11 +41,20 @@ def update_data_path(prefix, oldvalue=None):
             fields = line.split(' = ') # Separate variable from value
             if fields[0] == '__pdal_data_directory__':
                 # update to prefix, store oldvalue
-                if not oldvalue:
-                    oldvalue = fields[1]
+                if not oldvalue_data:
+                    oldvalue_data = fields[1]
                     line = "%s = '%s'\n" % (fields[0], prefix)
                 else: # restore oldvalue
-                    line = "%s = %s" % (fields[0], oldvalue)
+                    line = "%s = %s" % (fields[0], oldvalue_data)
+
+            if fields[0] == '__pdal_prefix__':
+                # update to prefix, store oldvalue
+                if not oldvalue_prefix:
+                    oldvalue_prefix = fields[1]
+                    line = "%s = '%s'\n" % (fields[0], prefix)
+                else: # restore oldvalue
+                    line = "%s = %s" % (fields[0], oldvalue_prefix)
+
             fout.write(line)
 
         fout.flush()
@@ -55,9 +64,10 @@ def update_data_path(prefix, oldvalue=None):
     except (OSError, IOError), e:
         print ("ERROR: Can't find pdal/pdalconfig.py")
         sys.exit(1)
-    return oldvalue
+#    return oldvalue
 
-oldvalue=update_data_path(prefix + '/share/pdal/')
+#oldvalue=update_data_path(prefix + '/share/pdal/')
+update_data_path(prefix + '/share/pdal/')
 
 
 #class Clean(Command):
