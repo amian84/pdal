@@ -21,7 +21,7 @@
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301
 # USA
 
-from gi.repository import Notify, Gtk, GdkPixbuf
+from gi.repository import Notify
 import os
 import sys
 from pdal import _
@@ -42,10 +42,14 @@ def get_default_icon_device():
 def notify(title, message, icon, timeout=Notify.EXPIRES_DEFAULT, transient=True):
 
     # Desktop Notifications Specification: http://www.galago-project.org/specs/notification/0.9/index.html
+    #from gi.repository import Gtk, GdkPixbuf
 
     if not Notify.init("Pdal " + _("Notifications")):
         return
-
+    #image = Gtk.Image()
+    #image.set_from_file(icon)
+    #pixbuf = image.get_pixbuf()
+    #pixbuf = pixbuf.scale_simple(DEFAULT_ICON_SIZE, DEFAULT_ICON_SIZE, GdkPixbuf.InterpType.BILINEAR)
     notify_daemon = Notify.Notification()
     notify = notify_daemon.new(title, '\n'+message, icon)
     notify.set_category('device.added')
@@ -62,14 +66,14 @@ def get_system_user_path():
     return os.path.join(get_data_path(), "scripts")
 
 
-def get_pixbuf_from_file(file_name, icon_size=DEFAULT_ICON_SIZE, flags=GdkPixbuf.InterpType.BILINEAR):
-    if not os.path.exists(file_name):
-        return None
-    image = Gtk.Image()
-    image.set_from_file(file_name)
-    pixbuf = image.get_pixbuf()
-    pixbuf = pixbuf.scale_simple(icon_size, icon_size, flags)
-    return pixbuf
+#def get_pixbuf_from_file(file_name, icon_size=DEFAULT_ICON_SIZE, flags=GdkPixbuf.InterpType.BILINEAR):
+#    if not os.path.exists(file_name):
+#        return None
+#    image = Gtk.Image()
+#    image.set_from_file(file_name)
+#    pixbuf = image.get_pixbuf()
+#    pixbuf = pixbuf.scale_simple(icon_size, icon_size, flags)
+#    return pixbuf
 
 #def get_theme_icon_path(icon_name, icon_size=DEFAULT_ICON_SIZE, flags=0):
 #    icon_theme = gtk.icon_theme_get_default()
