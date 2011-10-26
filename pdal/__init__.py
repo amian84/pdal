@@ -22,6 +22,7 @@
 
 import gettext
 import os
+import logging
 from pdal import pdalconfig
 
 
@@ -34,13 +35,14 @@ for line in f:
         languages = value.split('_')
         language = languages[0]
 
+logging.basicConfig(filename='/var/log/pdal.log', filemode='a', level=logging.INFO)
+
 if pdalconfig.get_prefix() == '/usr/local/share/pdal/':
     gettext.bindtextdomain('pdal', '/usr/local/share/locale')
 elif pdalconfig.get_prefix() == '/usr/share/pdal/':
     gettext.textdomain('pdal')
 
-    
-
+os.environ['LANG'] = language
 try:
     lang = gettext.translation('pdal',languages=[language])
     _ = lang.gettext

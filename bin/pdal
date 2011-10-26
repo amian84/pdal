@@ -242,7 +242,7 @@ if __name__ == '__main__':
 
     argvs = sys.argv[1:]
 
-    logging.basicConfig(filename='/var/log/pdal.log', filemode='a', level=logging.INFO)
+   # logging.basicConfig(filename='/var/log/pdal.log', filemode='a', level=logging.INFO)
     try:
         options, remainder = getopt.gnu_getopt(argvs, 'p:m:', ['path=', 'mode='])
 
