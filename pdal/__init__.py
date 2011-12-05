@@ -37,9 +37,9 @@ for line in f:
 
 logging.basicConfig(filename='/var/log/pdal.log', filemode='a', level=logging.INFO)
 
-if pdalconfig.get_prefix() == '/usr/local/share/pdal/':
+if pdalconfig.get_prefix() == '/usr/local':
     gettext.bindtextdomain('pdal', '/usr/local/share/locale')
-elif pdalconfig.get_prefix() == '/usr/share/pdal/':
+elif pdalconfig.get_prefix() == '/usr':
     gettext.textdomain('pdal')
 
 os.environ['LANG'] = language
