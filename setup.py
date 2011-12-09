@@ -74,7 +74,7 @@ class Clean(Command):
 
 
 
-DistUtilsExtra.auto.setup(
+setup(
         name='pdal2',
         version='0.3.2',
         license='GPL-2',
